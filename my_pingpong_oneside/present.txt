@@ -1,0 +1,24 @@
+Step:
+
+1. Initialize
+ 1). Get devices list and choose ib devices, default would be the first one.
+ 2).allocate a buffer for send and recv data. Use ibv_open_device api to create a ibv_context.
+ 3). Allocate a protection domain, control which remote computers can access its memory region 
+ 4). Register memory region with the hardware. Local key is created after memory registration. 
+ 5). Create completion queue. 
+ 6). Create and set queue pair which include sending queue and receiving queue. QP should associate with the same completion queue. Set the qp state to init state, set ib_port. 
+ 7). Receive must be posted before send
+
+2. Connect
+ 1). Get LID (local identifier) which is a number given to each port. This number can be get by ibv_query_port. LID is used to routing in in a subnet. 
+    Get QPN(queue pair number) which is identifier on HCA. 
+    Get PSN (packet sequence number) is used to verify the order. Specify the initial psn.
+    Get GID (global identifier) used to routing across subnet. 
+ 2). Exchange these number to each other by out-of-band like TCP.
+ 3). Modify queue pair attributes by giving these numbers that get from other side to the local hardware. And set the RTR and RTS state to qp.
+
+3. Send and Receive
+ Post send/receive to the queue pair. Each request will hold a linked list of scatter/gather elements. Give the start address, size, local key.
+
+4. Poll the completion queue
+ 1). Poll two work completion element a time cause the send/receive and parse it based on its work request id and status 
