@@ -465,7 +465,6 @@ static inline int parse_single_wc(struct pingpong_context *ctx, int *scnt,
 
 	switch ((int) wr_id) {
 		case PINGPONG_SEND_WRID:
-			printf("parse one send\n");
 			++(*scnt);
 			break;
 
@@ -479,7 +478,6 @@ static inline int parse_single_wc(struct pingpong_context *ctx, int *scnt,
 				return 1;
 				}
 			}
-			printf("parse one recv\n");
 			++(*rcnt);
 			break;
 		default:
@@ -591,9 +589,25 @@ int main(int argc, char *argv[]){
 
 	page_size = sysconf(_SC_PAGESIZE);
 
-	if (argc == 2) {
-		servername = strdupa(argv[1]);
-		printf("servername : %s", servername);
+	int ch;
+	struct option long_options[] = {
+		{"size", 1, NULL, 's'},
+		{"iters", 1, NULL, 'i'}
+	};
+
+	while((ch = getopt_long(argc, argv, "s:i", long_options, NULL)) != -1) {
+		switch (ch) {
+			case 's':
+				size = strtoul(optarg, NULL, 0);
+				break;
+			case 'i':
+				iters = strtoul(optarg, NULL, 0);
+				break;
+		} 
+	}
+
+	if (optind == argc - 1){
+		servername = strdupa(argv[optind]);
 	}
 
 	dev_list = ibv_get_device_list(NULL);

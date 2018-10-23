@@ -1,0 +1,36 @@
+One side
+Iteration : 2000
+Size  latency(usec/iter)	bandwidth(Mbit/sec)
+1B	2.25			7
+512B    2.4			3.3k
+1KB	2.5			6.4k
+10KB    4.2			39k
+256KB   58			72k
+512KB   108 			77k
+1MB     210			79.6k
+
+
+Two side
+Iteration :2000
+Size	latency(usec/iter)	bandwidth(Mbit/sec)
+1B	4.95			3.24
+512B	2.65			3k
+1KB	2.8			5.7k
+10KB	4.5			36.5k
+256KB	50			83.4k
+512KB	92			90k
+1MB	177			94.7k
+
+ibv_rc_pingpong
+Iteration: 2000
+Size	latency(usec/iter)	bandwidth(Mbit/sec)
+1B	2.2			7
+512B	2.5			3k
+1kB	2.8			5.8k
+10KB	4.4			37k
+256KB	50			83k
+512KB	92			91k
+1MB	173			96.5k
+
+
+
